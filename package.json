@@ -1,0 +1,31 @@
+{
+  "name": "blog-dcavell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darrencavell/blog-dcavell.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darrencavell/blog-dcavell/issues"
+  },
+  "homepage": "https://github.com/darrencavell/blog-dcavell#readme",
+  "dependencies": {
+    "hapi": "^18.0.1",
+    "hapi-auth-basic": "^5.0.0",
+    "joi": "^14.3.1",
+    "nodemon": "^1.18.9",
+    "pg": "^7.8.0",
+    "sequelize": "^4.42.0",
+    "sequelize-cli": "^5.4.0"
+  }
+}

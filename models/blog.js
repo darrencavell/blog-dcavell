@@ -7,12 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     content: DataTypes.TEXT,
-    userId: DataTypes.INTEGER,
     name: DataTypes.STRING,
   }, {});
   Blog.associate = function(models) {
-    Blog.belongsTo(models.User, {foreignKey: 'userId'});
-    Blog.hasMany(models.BlogTag, {foreignKey: 'id'});
+    Blog.belongsTo(models.User, {foreignKey: 'userId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
+    Blog.hasMany(models.BlogTag, {foreignKey: 'id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
   };
   return Blog;
 };

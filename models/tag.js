@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Tag.associate = function(models) {
-    Tag.hasMany(models.BlogTag, {foreignKey: 'id'})
+    Tag.hasMany(models.BlogTag, {foreignKey: 'id', sourceKey: 'id', onUpdate: 'cascade', onDelete: 'cascade'})
   };
   return Tag;
 };

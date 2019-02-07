@@ -5,13 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
-    },
-    blogId: DataTypes.INTEGER,
-    tagId: DataTypes.INTEGER
+    }
   }, {});
   BlogTag.associate = function(models) {
-    BlogTag.belongsTo(models.Blog, {foreignKey: 'blogId'}),
-    BlogTag.belongsTo(models.Tag, {foreignKey: 'tagId'})
+    BlogTag.belongsTo(models.Blog, {foreignKey: 'blogId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
+    BlogTag.belongsTo(models.Tag, {foreignKey: 'tagId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
   };
   return BlogTag;
 };

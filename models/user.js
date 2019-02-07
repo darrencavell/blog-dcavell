@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   }, {});
   User.associate = function(models) {
-    User.hasMany(models.Blog, {foreignKey: 'blogId'});
+    User.hasMany(models.Blog, {foreignKey: 'id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
   };
   return User;
 };

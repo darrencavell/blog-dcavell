@@ -12,12 +12,19 @@ module.exports = {
                 userId: Joi.number().integer().required(),
                 name: Joi.string().required(),
                 content: Joi.string().required(),
-                slug: Joi.string().required()
+                tags: Joi.required()
             }
         }
     },
     update: {
-        handler: BlogController.updateBlog
+        handler: BlogController.updateBlog,
+        validate: {
+            payload: {
+                id: Joi.number().integer().required(),
+                name: Joi.string().required(),
+                content: Joi.string().required(),
+            }
+        }
     },
     delete: {
         handler: BlogController.deleteBlog

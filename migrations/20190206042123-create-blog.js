@@ -14,15 +14,14 @@ module.exports = {
           model: 'Users', // name of Target model
           key: 'id', // key in Target model that we're referencing
         },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       name: {
         type: Sequelize.STRING
       },
       content: {
         type: Sequelize.TEXT
-      },
-      slug: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

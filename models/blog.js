@@ -6,15 +6,19 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
+    content: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    content: DataTypes.TEXT,
-    slug: DataTypes.STRING
   }, {});
   Blog.associate = function(models) {
-    Blog.belongsTo(models.User, {
-      foreignKey: 'id'
-    })
+    Blog.belongsTo(models.User, {foreignKey: 'userId'});
+    Blog.hasMany(models.BlogTag, {foreignKey: 'id'});
   };
   return Blog;
 };
+
+/*
+
+Blog 1 * User
+
+*/

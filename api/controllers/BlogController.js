@@ -6,26 +6,49 @@ const viewBlog = (request, h) => {
 }
 
 const insertBlog = (request, h) => {
-    const blogUserId = request.payload.userId;
+
+    if(request.auth.isAuthenticated) {
+        return {
+            'isAuthenticated': false
+        };
+    }
+
+    const blogUserId = request.state.session.user.id;
     const blogName = request.payload.name;
     const blogContent = request.payload.content;
-    const blogSlug = request.payload.slug;
+    const blogTags = request.payload.tags;
 
-    return BlogService.insertBlog(blogUserId, blogName, blogContent, blogSlug);
+    return BlogService.insertBlog(blogUserId, blogName, blogContent, blogTags);
 }
 const updateBlog = (request, h) => {
+
+    if(request.auth.isAuthenticated) {
+        return {
+            'isAuthenticated': false
+        };
+    }
+
+    const blogUserId = request.state.session.user.id;
     const blogId = request.payload.id;
-    const blogUserId = request.payload.userId;
     const blogName = request.payload.name;
     const blogContent = request.payload.content;
-    const blogSlug = request.payload.slug;
 
-    return BlogService.updateBlog(blogId, blogUserId, blogName, blogContent, blogSlug);
+    return BlogService.updateBlog(blogUserId, blogId, blogName, blogContent);
 }
 const deleteBlog = (request, h) => {
+
+    if(request.auth.isAuthenticated) {
+        return {
+            'isAuthenticated': false
+        };
+    }
+
+    const blogUserId = request.state.session.user.id;
     const blogId = request.payload.id;
 
-    return BlogService.deleteBlog(blogId);
+    console.log(blogId);
+
+    return BlogService.deleteBlog(blogUserId, blogId);
 }
 
 module.exports = {

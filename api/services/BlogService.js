@@ -16,6 +16,8 @@ const viewBlog = (pageNumber) => {
                 "content": dataOnCertainPage
             };
         });
+    }).catch(err => {
+        console.log(err);
     });
 }
 

@@ -6,12 +6,15 @@ const login = (userEmail, userPassword) => {
             email: userEmail, 
             password: userPassword
         }
-    }).then(response => {
-        return response;
+    }).then((user) => {
+        return Promise.resolve(user);
+    }).catch(() => {
+        return Promise.reject(404);
     })
 }
 
 const logout = (isCookieExists) => {
+    console.log(isCookieExists);
     if(isCookieExists === undefined) {
         return Promise.reject(404);
     }

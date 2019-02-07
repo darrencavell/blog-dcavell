@@ -1,5 +1,6 @@
 const UserHandler = require('./handlers/UserHandler');
 const BlogHandler = require('./handlers/BlogHandler');
+const TagHandler = require('./handlers/TagHandler');
 
 module.exports = {
     register: (server) => {
@@ -18,23 +19,28 @@ module.exports = {
             },
             {
                 method: 'GET',
-                path: '/post/get/{pageNumber}',
+                path: '/blog/get/{pageNumber}',
                 options: BlogHandler.view
             },
             {
                 method: 'POST',
-                path: '/post/create',
+                path: '/blog/create',
                 options: BlogHandler.insert
             },
             {
                 method: "PUT",
-                path: '/post/update',
+                path: '/blog/update',
                 options: BlogHandler.update
             },
             {
                 method: 'DELETE',
-                path: '/post/delete',
+                path: '/blog/delete',
                 options: BlogHandler.delete
+            },
+            {
+                method: 'GET',
+                path: '/{tag}/get/{pageNumber}',
+                options: TagHandler.view
             },
             {
                 method: 'GET',

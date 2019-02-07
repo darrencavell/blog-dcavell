@@ -1,4 +1,5 @@
 const BlogModel = require('./../../models').Blog;
+const BlogTagModel = require('./../../models').BlogTag;
 
 const viewBlog = (pageNumber) => {
     let limit = 2;
@@ -10,56 +11,85 @@ const viewBlog = (pageNumber) => {
             limit: limit,
             offset: offset
         }).then(dataOnCertainPage => {
-            return dataOnCertainPage;
+            return {
+                "pages": pages,
+                "content": dataOnCertainPage
+            };
         });
     });
 }
 
-const insertBlog = (blogUserId, blogName, blogContent, blogSlug) => {
+const insertBlog = (blogUserId, blogName, blogContent, blogTags) => {
     return BlogModel.create({
         userId: blogUserId,
         name: blogName,
         content: blogContent,
-        slug: blogSlug,
         createdAt: new Date(),
         updatedAt: new Date()
     }).then(blog => {
-        return {"pass": true};
+        blogTags.map(tag => {
+            BlogTagModel.create({
+                blogId: blog.id,
+                tagId: tag,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+        });
+        return {
+            "pass": true
+        }
     }).catch(err => {
-        return {"pass": err};
+        console.log(err);
+        return {
+            "pass": false
+        }
     })
 }
 
-const updateBlog = (blogId, blogUserId, blogName, blogContent, blogSlug) => {
+const updateBlog = (blogUserId, blogId, blogName, blogContent) => {
     return BlogModel.findOne({
-        where: {id: blogId}
+        where: {
+            id: blogId,
+            userId: blogUserId
+        }
     }).then(blog => {
-        blog.userId = blogUserId;
         blog.name = blogName;
         blog.content = blogContent;
-        blog.slug = blogSlug;
         blog.updatedAt = new Date()
         return blog.save().then(success => {
-            return {"pass": true}
+            return {
+                "pass": true
+            }
         }).catch(err => {
-            return {"pass": false}
+            console.log(err);
+            return {
+                "pass": false
+            }
         })
     }).catch(err => {
-        return {"pass": false}
+        console.log(err);
+        return {
+            "pass": "bukan punya sendiri oncom"
+        }
     })
 }
 
-const deleteBlog = (blogId) => {
-    return BlogModel.findOne({
-        where: {id: blogId}
-    }).then(blog => {
-        return blog.destroy().then(success => {
-            return {"pass": true}
-        }).catch(err => {
-            return {"pass": false}
-        })
-    }).catch(err => {
-        return {"pass": false}
+const deleteBlog = (blogUserId, blogId) => {
+    return BlogModel.destroy({
+        where: {
+            id: blogId,
+            userId: blogUserId
+        }
+    }).then(result => {
+        if(result == 1){
+            return {
+                "pass": true
+            }
+        }else {
+            return {
+                "pass": "bukan punya sendiri oncom"
+            }
+        }
     })
 }
 

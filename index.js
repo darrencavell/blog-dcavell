@@ -27,7 +27,6 @@ const init = async () => {
             return out;
         }
     });
-
     await server.register(require('./api'));
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);

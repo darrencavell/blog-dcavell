@@ -5,28 +5,27 @@ const login = (request, h) => {
     const userEmail = request.payload.email;
     const userPassword = request.payload.password;
     
-    return UserService.login(userEmail, userPassword).then(user => {
-        request.cookieAuth.set({user});
-        request.cookieAuth.ttl(2 * 60 * 60 * 1000);
-        return {
-            "isAuthenticated": true 
-        };
-    }).catch(err => {
-        console.log(err);
-        return {
-            "isAuthenticated": false 
-        };
+    return UserService.login(userEmail, userPassword).then(response => {
+        if(response !== null) { // User found
+            request.cookieAuth.set(response);
+            request.cookieAuth.ttl(2 * 60 * 60 * 1000);
+            return 200;
+        }
+        return 404; // User 🙈 found
     });
 }
 
 const logout = (request, h) => {
-    return UserService.logout().then(success => {
-        request.cookieAuth.clear();
-    }).catch(err => {
-        console.log(err);
-        return {
-            "isAuthenticated": true 
-        };
+
+    const isCookieExists = request.state.session;
+
+    return UserService.logout(isCookieExists).then(response => {
+        console.log(response);
+        if(response === 200) { // Cookie found
+            request.cookieAuth.clear(); 
+            return 200;
+        }
+        return 404; // Cookie 🙈 found
     });
 }
 

@@ -6,23 +6,16 @@ const login = (userEmail, userPassword) => {
             email: userEmail, 
             password: userPassword
         }
-    }).then(user => {
-        if(user) {
-            console.log(user);
-            return user;
-        }
-    }).catch((err) => {
-        console.log(err);
-        return {
-            "isAuthenticated": false
-        };
+    }).then(response => {
+        return response;
     })
 }
 
-const logout = () => {
-    return {
-        "isAuthenticated": false
+const logout = (isCookieExists) => {
+    if(isCookieExists === undefined) {
+        return Promise.reject(404);
     }
+    return Promise.resolve(200);
 }
 
 module.exports = {

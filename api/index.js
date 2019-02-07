@@ -19,6 +19,11 @@ module.exports = {
             },
             {
                 method: 'GET',
+                path: '/logout',
+                options: UserHandler.logout
+            },
+            {
+                method: 'GET',
                 path: '/blog/get/{pageNumber}',
                 options: BlogHandler.view
             },

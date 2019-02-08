@@ -14,7 +14,6 @@ const login = (userEmail, userPassword) => {
 }
 
 const logout = (isCookieExists) => {
-    console.log(isCookieExists);
     if(isCookieExists === undefined) {
         return Promise.reject(404);
     }

@@ -1,5 +1,7 @@
 const BlogModel = require('./../../models').Blog;
 const BlogTagModel = require('./../../models').BlogTag;
+const TagModel = require('./../../models').Tag;
+const UserModel = require('./../../models').User;
 
 const viewBlog = (pageNumber) => {
     let limit = 2;
@@ -9,7 +11,32 @@ const viewBlog = (pageNumber) => {
         offset = limit * (pageNumber - 1);
         return BlogModel.findAll({
             limit: limit,
-            offset: offset
+            offset: offset,
+            attributes: {
+                exclude: ['createdAt']
+            },
+            include: [
+                {
+                    model: BlogTagModel,
+                    attributes: {
+                        exclude: ['id', 'createdAt', 'updatedAt']
+                    },
+                    include: [
+                        {
+                            model: TagModel,
+                            attributes: {
+                                exclude: ['id', 'createdAt', 'updatedAt']
+                            }
+                        }
+                    ],
+                },
+                {
+                    model: UserModel,
+                    attributes: {
+                        exclude: ['createdAt', 'password']
+                    }
+                }
+            ],
         }).then(dataOnCertainPage => {
             return {
                 "pages": pages,

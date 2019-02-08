@@ -1,5 +1,7 @@
 const BlogTagModel = require('./../../models').BlogTag;
 const TagModel = require('./../../models').Tag;
+const BlogModel = require('./../../models').Blog;
+const UserModel = require('./../../models').User;
 
 const findByTag = (pageNumber, tagName) => {
     let limit = 2;
@@ -10,19 +12,59 @@ const findByTag = (pageNumber, tagName) => {
             name: camelCaseTagName
         }
     }).then(data => {
-        return BlogTagModel.findAndCountAll({
-            where: {
-                tagId: data.id
-            },
-            limit: limit,
-            offset: offset,
-        }).then(dataSearched => {
-            let pages = Math.ceil(dataSearched.count / limit);
+        return BlogTagModel.findAndCountAll().then(data => {
+            let pages = Math.ceil(data.count / limit);
             offset = limit * (pageNumber - 1);
-            return {
-                "pages": pages, 
-                "content": dataSearched
-            };
+            return BlogTagModel.findAll({
+                limit: limit,
+                offset: offset,
+                attributes: {
+                    exclude: ['createdAt']
+                },
+                include: [
+                    {
+                        model: BlogModel,
+                        attributes: {
+                            exclude: ['createdAt']
+                        },
+                        include: [
+                            {
+                                model: BlogTagModel,
+                                attributes: {
+                                    exclude: ['id', 'createdAt', 'updatedAt']
+                                },
+                                include: [
+                                    {
+                                        model: TagModel,
+                                        attributes: {
+                                            exclude: ['id', 'createdAt', 'updatedAt']
+                                        }
+                                    }
+                                ],
+                            },
+                            {
+                                model: UserModel,
+                                attributes: {
+                                    exclude: ['createdAt', 'password']
+                                }
+                            }
+                        ],
+                    },
+                    {
+                        model: TagModel,
+                        attributes: {
+                            exclude: ['createdAt']
+                        }
+                    }
+                ]
+            }).then(dataSearched => {
+                return {
+                    "pages": pages, 
+                    "content": dataSearched
+                };
+            })
+        }).catch(err => {
+            console.log(err);
         })
     }).catch(err => {
         console.log(err);

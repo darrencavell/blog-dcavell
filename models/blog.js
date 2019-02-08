@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
   }, {});
   Blog.associate = function(models) {
-    Blog.belongsTo(models.User, {foreignKey: 'userId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
-    Blog.hasMany(models.BlogTag, {foreignKey: 'id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
+    Blog.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
+    Blog.hasMany(models.BlogTag, {foreignKey: 'blogId', onDelete: 'cascade', onUpdate: 'cascade'});
   };
   return Blog;
 };

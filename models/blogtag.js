@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   BlogTag.associate = function(models) {
-    BlogTag.belongsTo(models.Blog, {foreignKey: 'blogId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
-    BlogTag.belongsTo(models.Tag, {foreignKey: 'tagId', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
+    BlogTag.belongsTo(models.Blog, {foreignKey: 'blogId', onDelete: 'cascade', onUpdate: 'cascade'});
+    BlogTag.belongsTo(models.Tag, {foreignKey: 'tagId', onDelete: 'cascade', onUpdate: 'cascade'});
   };
   return BlogTag;
 };

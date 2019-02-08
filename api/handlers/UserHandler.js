@@ -13,5 +13,8 @@ module.exports = {
     },
     logout: {
         handler: UserController.logout
+    },
+    checkAuth: {
+        handler: UserController.checkAuth
     }
 }

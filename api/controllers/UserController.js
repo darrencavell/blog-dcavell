@@ -22,7 +22,7 @@ const login = (request, h) => {
 }
 
 const logout = (request, h) => {
-    if(request.state.session !== undefined) { // Authenticate
+    if(request.state.session !== undefined) { // Created Already
         const isCookieExists = request.state.session;
         return UserService.logout(isCookieExists).then(response => {
             request.cookieAuth.clear(); 
@@ -35,11 +35,22 @@ const logout = (request, h) => {
             }
         });
     } 
-    return { // Unauthorized
-        "status": 401
+    return { // Not Yet Created
+        "status": 201
+    }
+}
+
+const checkAuth = (request, h) => {
+    if(request.state.session === undefined) { // Cookie Not found
+        return { 
+            "status": 404
+        }
+    } 
+    return { // Cookie found
+        "status": 302
     }
 }
 
 module.exports = {
-    login, logout
+    login, logout, checkAuth
 }

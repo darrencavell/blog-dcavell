@@ -12,10 +12,19 @@ const findByTag = (pageNumber, tagName) => {
             name: camelCaseTagName
         }
     }).then(data => {
-        return BlogTagModel.findAndCountAll().then(data => {
-            let pages = Math.ceil(data.count / limit);
+        return BlogTagModel.findAndCountAll({
+            where: {
+                tagId: data.id
+            }
+        }).then(response => {
+            console.log('RESPONSE');
+            console.log(response);
+            let pages = Math.ceil(response.count / limit);
             offset = limit * (pageNumber - 1);
             return BlogTagModel.findAll({
+                where: {
+                    tagId: data.id
+                },
                 limit: limit,
                 offset: offset,
                 attributes: {
@@ -50,12 +59,6 @@ const findByTag = (pageNumber, tagName) => {
                             }
                         ],
                     },
-                    {
-                        model: TagModel,
-                        attributes: {
-                            exclude: ['createdAt']
-                        }
-                    }
                 ]
             }).then(dataSearched => {
                 return {

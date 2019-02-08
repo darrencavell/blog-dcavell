@@ -7,10 +7,8 @@ module.exports = {
         server.route([
             {
                 method: 'GET',
-                path: '/{name}',
-                handler: (request, h) => {
-                    return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
-                }
+                path: '/checkauth',
+                options: UserHandler.checkAuth
             },
             {
                 method: 'POST',

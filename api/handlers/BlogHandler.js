@@ -9,7 +9,6 @@ module.exports = {
         handler: BlogController.insertBlog,
         validate: {
             payload: {
-                userId: Joi.number().integer().required(),
                 name: Joi.string().required(),
                 content: Joi.string().required(),
                 tags: Joi.required()

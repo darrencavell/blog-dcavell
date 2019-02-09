@@ -65,12 +65,12 @@ const insertBlog = (blogUserId, blogName, blogContent, blogTags) => {
             })
         });
         return {
-            "pass": true
+            "created": true
         }
     }).catch(err => {
         console.log(err);
         return {
-            "pass": false
+            "created": false
         }
     })
 }
@@ -87,18 +87,21 @@ const updateBlog = (blogUserId, blogId, blogName, blogContent) => {
         blog.updatedAt = new Date()
         return blog.save().then(success => {
             return {
-                "pass": true
+                "owner": true,
+                "updated": true
             }
         }).catch(err => {
             console.log(err);
             return {
-                "pass": false
+                "owner": true,
+                "updated": false
             }
         })
     }).catch(err => {
         console.log(err);
         return {
-            "pass": "bukan punya sendiri oncom"
+            "owner": false,
+            "updated": false
         }
     })
 }
@@ -112,11 +115,13 @@ const deleteBlog = (blogUserId, blogId) => {
     }).then(result => {
         if(result == 1){
             return {
-                "pass": true
+                "owner": true,
+                "deleted": true
             }
         }else {
             return {
-                "pass": "bukan punya sendiri oncom"
+                "owner": false,
+                "deleted": false
             }
         }
     })

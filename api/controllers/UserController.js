@@ -1,24 +1,41 @@
 const UserService = require('./../services/UserService');
+var jwt = require('jsonwebtoken');
 
 const login = (request, h) => {
-    if(request.state.session === undefined) { // Not Authenticate
-        const userEmail = request.payload.email;
-        const userPassword = request.payload.password;
-        return UserService.login(userEmail, userPassword).then(response => {
-            request.cookieAuth.set(response);
-            request.cookieAuth.ttl(2 * 60 * 60 * 1000);
-            return { // User found
-                "status": 302
-            }
-        }).catch(() => {
-            return { // User not found
-                "status": 404
-            }
-        });
-    }
-    return { // Unauthorized
-        "status": 401
-    }
+    const userEmail = request.payload.email;
+    const userPassword = request.payload.password;
+    return UserService.login(userEmail, userPassword).then(response => {
+        var token = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60),
+            data: response.dataValues
+        }, 'shhhhh');
+        return {
+            "status": 302,
+            "token": token
+        }
+    }).catch(() => {
+        return { // User not found
+            "status": 404
+        }
+    });
+    // if(request.state.session === undefined) { // Not Authenticate
+    //     const userEmail = request.payload.email;
+    //     const userPassword = request.payload.password;
+    //     return UserService.login(userEmail, userPassword).then(response => {
+    //         request.cookieAuth.set(response);
+    //         request.cookieAuth.ttl(2 * 60 * 60 * 1000);
+    //         return { // User found
+    //             "status": 302
+    //         }
+    //     }).catch(() => {
+    //         return { // User not found
+    //             "status": 404
+    //         }
+    //     });
+    // }
+    // return { // Unauthorized
+    //     "status": 401
+    // }
 }
 
 const logout = (request, h) => {

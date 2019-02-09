@@ -6,6 +6,10 @@ const viewTag = (request, h) => {
     return TagService.findByTag(page, tagName);
 }
 
+const listTag = (request, h) => {
+    return TagService.listTags();
+}
+
 module.exports = {
-    viewTag
+    viewTag, listTag
 }

@@ -75,6 +75,12 @@ const findByTag = (pageNumber, tagName) => {
     
 }
 
+const listTags = () => {
+    return TagModel.findAll().then(response => {
+        return response;
+    })
+}
+
 module.exports = {
-    findByTag
+    findByTag, listTags
 }

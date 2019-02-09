@@ -42,6 +42,11 @@ module.exports = {
             },
             {
                 method: 'GET',
+                path: '/tags',
+                options: TagHandler.listTag
+            },
+            {
+                method: 'GET',
                 path: '/{tag}/get/{pageNumber}',
                 options: TagHandler.view
             },

@@ -21,9 +21,6 @@
   "homepage": "https://github.com/darrencavell/blog-dcavell#readme",
   "dependencies": {
     "hapi": "^18.0.1",
-    "hapi-auth-cookie": "^9.1.0",
-    "hapi-auth-jwt": "^4.0.0",
-    "hapi-auth-jwt2": "^8.3.0",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.4.0",
     "pg": "^7.8.0",

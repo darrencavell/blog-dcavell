@@ -55,7 +55,7 @@ const deleteBlog = (request, h) => {
         const token = authorizeToken.substring(request.headers['authorization'].indexOf(' ')+1);
         const decoded = jwt.verify(token, 'shhhhh');
         
-        const blogUserId = request.state.session.id;
+        const blogUserId = decoded.data.id;;
         const blogId = request.payload.id;
         return BlogService.deleteBlog(blogUserId, blogId);
     }

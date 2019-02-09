@@ -76,7 +76,13 @@ const findByTag = (pageNumber, tagName) => {
 }
 
 const listTags = () => {
-    return TagModel.findAll().then(response => {
+    return TagModel.findAll({
+        order: [
+            ['id', 'ASC']
+        ]
+    }).then(response => {
+        console.log('tagAll');
+        console.log(response);
         return response;
     })
 }

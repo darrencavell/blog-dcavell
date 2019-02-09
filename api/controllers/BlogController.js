@@ -14,7 +14,7 @@ const insertBlog = (request, h) => {
 
         const blogUserId = decoded.data.id;
         const blogName = request.payload.name;
-        const blogContent = request.payload.scontent;
+        const blogContent = request.payload.content;
         const blogTags = request.payload.tags;
         return BlogService.insertBlog(blogUserId, blogName, blogContent, blogTags);
     }
